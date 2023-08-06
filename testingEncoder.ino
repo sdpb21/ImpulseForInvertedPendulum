@@ -6,11 +6,42 @@ void setup() {
   while(!Serial){
     ;
   }
-
+  pinMode(3,INPUT_PULLUP);
+  attachInterrupt(0,f1,RISING);
+  //Serial.write("0,0\r\n");
+  for(i=0;i<90;i++){
+    analogWrite(5,duty*sin(2*i*3.1416/180));
+    Serial.print(millis());
+    Serial.write(' ');
+    Serial.print(contador);
+    Serial.write("\r\n");
+    delayMicroseconds(4860);
+  }//fin for
+  analogWrite(5,0);
+  for(i=0;i<90;i++){
+    analogWrite(6,duty*sin(2*i*3.1416/180));
+    Serial.print(millis());
+    Serial.write(' ');
+    Serial.print(contador);
+    Serial.write("\r\n");
+    delayMicroseconds(4860);
+  }//fin for
+  analogWrite(6,0);
+  /*Serial.print(millis());
+  Serial.write("\r\n");*/
 }
-
 void loop() {
   // put your main code here, to run repeatedly:
-
+  Serial.print(millis());
+  Serial.write(' ');
+  Serial.print(contador);
+  Serial.write("\r\n");
+}
+void f1(){
+  if(digitalRead(3)==LOW){
+    contador++;
+  }else{
+    contador--;
+  }
 }
 
